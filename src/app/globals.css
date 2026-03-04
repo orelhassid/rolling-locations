@@ -164,6 +164,20 @@
   min-height: 100vh !important;
 }
 
+/* RTL dashboard: sidebar stays on the right, main content fills the rest */
+[dir="rtl"] [data-slot="sidebar-wrapper"] {
+  width: 100%;
+}
+[dir="rtl"] [data-slot="sidebar-inset"] {
+  min-width: 0;
+  flex: 1 1 0%;
+}
+/* Keep right sidebar on the physical right in RTL (override primitive’s rtl:left-0) */
+[dir="rtl"] [data-slot="sidebar"][data-side="right"] [data-slot="sidebar-container"] {
+  right: 0;
+  left: auto;
+}
+
 /* RTL alignment fixes for dashboard shell/sidebar primitives */
 [dir="rtl"] [data-sidebar="menu-button"],
 [dir="rtl"] [data-slot="sidebar-menu-sub-button"] {

@@ -73,6 +73,23 @@ export default function CreatorBookingDetailPage() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const booking = useCreatorStore((s) => s.getBookingById(params.id));
+
+  // #region agent log
+  React.useEffect(() => {
+    fetch("http://127.0.0.1:7937/ingest/46418d2a-1ca7-40ce-acd2-210424890731", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "706b3d" },
+      body: JSON.stringify({
+        sessionId: "706b3d",
+        location: "creator/bookings/[id]/page.tsx",
+        message: "Creator booking detail mounted",
+        data: { bookingId: params.id, found: !!booking },
+        timestamp: Date.now(),
+        hypothesisId: "H4",
+      }),
+    }).catch(() => {});
+  }, [params.id, booking]);
+  // #endregion
   const getLocationById = useCreatorStore((s) => s.getLocationById);
   const cancelBooking = useCreatorStore((s) => s.cancelBooking);
 
